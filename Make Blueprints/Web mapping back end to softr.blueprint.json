@@ -1,0 +1,508 @@
+{
+    "name": "Web mapping back end to softr",
+    "flow": [
+        {
+            "id": 1,
+            "module": "openai-gpt-3:askAnything",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "model": "gpt-5-nano",
+                "textPrompt": "Role: Digital Operations Assistant\nConditions: Read data from google sheets,Sending API requests,give professional honest feedback from acquired data,Give updates and analysed summaries,give strategies to scale business and maintain cashflow( profits), think like alex hormozi and Morgan De Baun while giving strategies( also come up with your own to give the best strategies).\nRules: Ensure accuracy and use correct data,use diagramns and tables where applicable, do not hallucinate.Always give the strategic analysis report on 4pm of every Sunday in order  to start the week with fresh ideas.\nGoals: To always  make me profitable, to maintain a positive cashflow, save me time and money,give proper strategies that allign with my core goals"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "model": {
+                            "label": "GPT-5 nanoThe most cost-effective option for casual conversation and straightforward, simple fact-retrieval"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "gpt-5-nano",
+                                "gpt-6.1-sol",
+                                "gpt-6.1-terra",
+                                "gpt-6-sol",
+                                "gpt-6-luna",
+                                "gpt-6-astra",
+                                "gpt-5.6-sol",
+                                "gpt-5.6-terra",
+                                "gpt-5.6-luna",
+                                "gpt-5.5",
+                                "gpt-5.4-nano",
+                                "gpt-5.4-mini",
+                                "gpt-5.4",
+                                "gpt-5.2",
+                                "gpt-5.1",
+                                "gpt-5",
+                                "gpt-5-mini"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "textPrompt",
+                        "type": "text",
+                        "label": "Text prompt",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 12438358
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "last updated by",
+                            "b": "website form",
+                            "o": "text:notequal"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "from": "drive",
+                "mode": "select",
+                "values": {
+                    "6": "Done",
+                    "7": "Make agent"
+                },
+                "sheetId": "Maintenance",
+                "spreadsheetId": "/1rQjtywzhqDy60RZ-0oYIRL_ZlUU3EHNf/1FlZotjoA-vRJXeuOjsPYRPaWA4GWJgV7i_Wyz6-63Ho",
+                "includesHeaders": true,
+                "insertDataOption": "INSERT_ROWS",
+                "useColumnHeaders": false,
+                "valueInputOption": "USER_ENTERED",
+                "insertUnformatted": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "setupValidation": {
+                    "result": {
+                        "valid": true,
+                        "fields": []
+                    },
+                    "version": 1,
+                    "configuration": "9c0ac921c05c8ccf"
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "Maintenance"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Andrew's farm",
+                                "Andrew's farm sheet"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes"
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "useColumnHeaders": {
+                            "label": "No"
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        },
+                        "insertUnformatted": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "vahidjuma002@gmail.com (vahidjuma002@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertUnformatted",
+                        "type": "boolean",
+                        "label": "Unformatted",
+                        "required": true
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertDataOption",
+                        "type": "select",
+                        "label": "Insert data option",
+                        "validate": {
+                            "enum": [
+                                "INSERT_ROWS",
+                                "OVERWRITE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "useColumnHeaders",
+                        "type": "select",
+                        "label": "Use column headers as IDs of the columns",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "Date  (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "Description (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "Item bought (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "Labour (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "Amount (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "Job status (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "Sync status (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "Created by (H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "(I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "(J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "(K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "(L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "(M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "(N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Values in columns",
+                        "metadata": [
+                            [
+                                [
+                                    "Date ",
+                                    "Description",
+                                    "Item bought",
+                                    "Labour",
+                                    "Amount",
+                                    "Job status",
+                                    "Sync status",
+                                    "Created by"
+                                ]
+                            ]
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "softr:createNewUser",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 12515707
+            },
+            "mapper": {
+                "link": true,
+                "name": "Vahid Juma",
+                "email": "vahidjuma002@gmail.com",
+                "password": "Petrol100._"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "setupValidation": {
+                    "result": {
+                        "valid": true,
+                        "fields": []
+                    },
+                    "version": 1,
+                    "configuration": "4d0be81b289bd7cd"
+                },
+                "restore": {
+                    "expect": {
+                        "link": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "softr"
+                            },
+                            "label": "Vahid's Softr Application connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:softr",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "email",
+                        "type": "email",
+                        "label": "Email",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "type": "password",
+                        "label": "Password",
+                        "required": true
+                    },
+                    {
+                        "name": "link",
+                        "type": "boolean",
+                        "label": "Magiclink",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}

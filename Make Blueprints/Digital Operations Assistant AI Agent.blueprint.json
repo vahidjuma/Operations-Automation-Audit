@@ -1,0 +1,1759 @@
+{
+    "name": "Digital Operations Assistant AI Agent",
+    "flow": [
+        {
+            "id": 4,
+            "module": "placeholder:Placeholder",
+            "filter": null,
+            "metadata": {
+                "designer": {
+                    "x": -300,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 1,
+            "module": "ai-local-agent:RunLocalAIAgent",
+            "version": 0,
+            "parameters": {
+                "makeConnectionId": 12086492
+            },
+            "mapper": {
+                "files": [],
+                "message": "1)Andrew's Farm google sheets\n2) Any information from my softr website.\n3) Information from the scenarios \n4) Info from my email (vahidjuma002@gmail.com)\n5) Google drive and google docs\n6) Info from Africa's talking and protrack.\n",
+                "threadId": "Vahid Juma 001",
+                "outputType": "text",
+                "tokenLimit": "50",
+                "modelConfig": {
+                    "timeout": "",
+                    "recursionLimit": "300",
+                    "aiCompactionEnabled": true,
+                    "iterationsFromHistoryCount": "10"
+                },
+                "defaultModel": "medium",
+                "systemPrompt": "Act as a Digital Operations Manager,Chief Revenue Officer and Chief Strategist . \nTask router: Classify the incoming tasks from softr,google sheets and any other inputting websites to the required module scenarios for appropriate task allocation and work distribution.\nSupervisor: Review scenario outputs,summarize results and report any errors or unusual occurences to my email.\nDelegator: Assign strategy and analysis roles to the chat gpt scenario, input and output information transfer to webhook scenario and any other roles to the specified scenarios as I assigned them and maybe forgotten to tell you.\nDecision maker:Handle variable cases where the correct scenario or next step is not known in advance.\nGoals: Ensure all scenarios and systems work towards increasing the organisation's profits and scalability and also maintaining cash flow, Also aim  at saving my time and energy since you should ensure reliability at all times.\nRules: Always be accurate on all input and output postings,cross check the work before outputing and flag any errors to my email (vahidjuma002@gmail.com), ensure there is bi-directional sync of updates of info from back end apps to make.com to softr website and back.\n\n",
+                "promptCaching": "none",
+                "fallbackEnabled": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "files": {
+                            "mode": "chose"
+                        },
+                        "outputType": {
+                            "label": "Text"
+                        },
+                        "defaultModel": {
+                            "mode": "chose",
+                            "label": "MediumModel: gpt-5-nano. Reasoning: low. A balanced, quick choice for clearly defined tasks needing reliable answers rather than deep analysis"
+                        },
+                        "promptCaching": {
+                            "label": "Automatic (always on)"
+                        }
+                    },
+                    "parameters": {
+                        "makeConnectionId": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "ai-provider"
+                            },
+                            "label": "Make's AI Provider (default)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "makeConnectionId",
+                        "type": "account:ai-provider,openai-gpt-3,anthropic-claude,gemini-ai-q9zyjp,ai-agent-foundry-openai,ai-agent-foundry-non-openai,mistral-ai,cohere,groq,ai-agent-xai,amazon-bedrock,ai-agent-openai-compatible",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "defaultModel",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "tokenLimit",
+                        "type": "number",
+                        "label": "Maximum output length (%)",
+                        "validate": {
+                            "max": 100,
+                            "min": 20
+                        }
+                    },
+                    {
+                        "name": "promptCaching",
+                        "type": "select",
+                        "label": "Prompt caching",
+                        "validate": {
+                            "enum": [
+                                "none"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "fallbackEnabled",
+                        "type": "boolean",
+                        "label": "Enable fallback connection",
+                        "required": true
+                    },
+                    {
+                        "name": "systemPrompt",
+                        "type": "text",
+                        "label": "Instructions"
+                    },
+                    {
+                        "name": "message",
+                        "type": "text",
+                        "label": "Input",
+                        "required": true
+                    },
+                    {
+                        "name": "files",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "type": "filename",
+                                "label": "File name",
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "semantic": "file:data"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Input files"
+                    },
+                    {
+                        "name": "threadId",
+                        "type": "text",
+                        "label": "Conversation ID",
+                        "validate": {
+                            "max": 256
+                        }
+                    },
+                    {
+                        "name": "modelConfig",
+                        "spec": [
+                            {
+                                "name": "recursionLimit",
+                                "type": "number",
+                                "label": "Steps per agent call"
+                            },
+                            {
+                                "name": "iterationsFromHistoryCount",
+                                "type": "number",
+                                "label": "Maximum conversation history"
+                            },
+                            {
+                                "name": "timeout",
+                                "type": "number",
+                                "label": "Step timeout",
+                                "validate": {
+                                    "max": 600,
+                                    "min": 120
+                                }
+                            },
+                            {
+                                "name": "aiCompactionEnabled",
+                                "type": "boolean",
+                                "label": "Enable compaction",
+                                "required": true
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Model configuration"
+                    },
+                    {
+                        "name": "outputType",
+                        "type": "select",
+                        "label": "Response format",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "make-schema",
+                                "udt-schema"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "tools": [
+                {
+                    "name": "Integration OpenAI (ChatGPT, Whisper)",
+                    "description": "",
+                    "flow": [
+                        {
+                            "id": 5,
+                            "module": "scenario-service:CallSubscenario",
+                            "version": 2,
+                            "parameters": {
+                                "scenario": "SCN_8221261",
+                                "shouldWaitForExecutionEnd": true
+                            },
+                            "mapper": {},
+                            "metadata": {
+                                "designer": {
+                                    "x": 387,
+                                    "y": 22
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "3857eb9806ec1b28"
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "scenario": {
+                                            "label": "Integration OpenAI (ChatGPT, Whisper)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "scenario",
+                                        "type": "scenario",
+                                        "label": "Scenario",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "shouldWaitForExecutionEnd",
+                                        "type": "boolean",
+                                        "label": "Wait for the scenario to finish",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "options": {
+                        "useScenarioNameAndDescription": true
+                    }
+                },
+                {
+                    "name": "Webhook from softr to make to google sheets",
+                    "description": " Ensure a bi-directional sync of data from softr to make.com then back end apps is always done and flag incase of any fault in the system.Act as an overseer",
+                    "flow": [
+                        {
+                            "id": 7,
+                            "module": "scenario-service:CallSubscenario",
+                            "version": 2,
+                            "parameters": {
+                                "scenario": "SCN_8221140",
+                                "shouldWaitForExecutionEnd": true
+                            },
+                            "mapper": {},
+                            "metadata": {
+                                "designer": {
+                                    "x": 563,
+                                    "y": 121
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "2c887a9fa7c186c2"
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "scenario": {
+                                            "label": "Webhook from softr to make to google sheets"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "scenario",
+                                        "type": "scenario",
+                                        "label": "Scenario",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "shouldWaitForExecutionEnd",
+                                        "type": "boolean",
+                                        "label": "Wait for the scenario to finish",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "options": {
+                        "useScenarioNameAndDescription": true
+                    }
+                },
+                {
+                    "name": "Softr: Updates on softr database from trip logs sheet from Andrew's farm on google sheets",
+                    "description": "Update records from google sheets trip logs sheet from  their dates to other columns according to  descriptions e.g job type to required job types on the softr database and the status to the required slots .",
+                    "flow": [
+                        {
+                            "id": 8,
+                            "module": "softr:createDatabaseRecord",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 12609716
+                            },
+                            "mapper": {
+                                "3hd8Z": "{{1.input_3hd8Z}}",
+                                "5LWRY": "{{1.input_5LWRY}}",
+                                "DGXlo": "{{1.DGXlo}}",
+                                "OHa56": {
+                                    "label": "{{1.OHa56.label}}"
+                                },
+                                "SnWgY": "{{1.SnWgY}}",
+                                "SppYI": "{{1.SppYI}}",
+                                "eelyZ": "{{1.eelyZ}}",
+                                "nZIan": "{{1.nZIan}}",
+                                "om5j9": "{{1.om5j9}}",
+                                "qQxs6": "{{1.qQxs6}}",
+                                "tLhbT": "{{1.tLhbT}}",
+                                "y0xNJ": "{{1.y0xNJ}}",
+                                "tableId": "dSJUD8qjWArq8h",
+                                "databaseId": "d9ba55c7-335f-46ba-8d7b-aabc143eaba6"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 384,
+                                    "y": 167
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "b5ff2adfa7e3aace"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "eelyZ": {
+                                            "mode": "edit"
+                                        },
+                                        "tableId": {
+                                            "label": "Trip logs"
+                                        },
+                                        "databaseId": {
+                                            "label": "Andrew's Farm "
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "softr2"
+                                            },
+                                            "label": "Vahid's Softr Database connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:softr2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "databaseId",
+                                        "type": "select",
+                                        "label": "Database",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableId",
+                                        "type": "select",
+                                        "label": "Table",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "nZIan",
+                                        "type": "text",
+                                        "label": "Display name"
+                                    },
+                                    {
+                                        "name": "SnWgY",
+                                        "type": "text",
+                                        "label": "Log Date"
+                                    },
+                                    {
+                                        "name": "SppYI",
+                                        "type": "number",
+                                        "label": "Odometer Reading"
+                                    },
+                                    {
+                                        "name": "3hd8Z",
+                                        "type": "number",
+                                        "label": "Fuel Amount"
+                                    },
+                                    {
+                                        "name": "5LWRY",
+                                        "type": "number",
+                                        "label": "Fuel Cost"
+                                    },
+                                    {
+                                        "name": "om5j9",
+                                        "type": "number",
+                                        "label": "Fuel Price per Litre"
+                                    },
+                                    {
+                                        "name": "eelyZ",
+                                        "type": "boolean",
+                                        "label": "Full Tank"
+                                    },
+                                    {
+                                        "name": "y0xNJ",
+                                        "type": "text",
+                                        "label": "Notes"
+                                    },
+                                    {
+                                        "name": "tLhbT",
+                                        "type": "text",
+                                        "label": "Created At"
+                                    },
+                                    {
+                                        "name": "qQxs6",
+                                        "type": "text",
+                                        "label": "Updated At"
+                                    },
+                                    {
+                                        "name": "OHa56",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By"
+                                    },
+                                    {
+                                        "name": "DGXlo",
+                                        "type": "text",
+                                        "label": "Fuel Cost per Litre"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "date",
+                                        "label": "Date created"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "date",
+                                        "label": "Date updated"
+                                    },
+                                    {
+                                        "name": "createdBy",
+                                        "type": "uuid",
+                                        "label": "Created by"
+                                    },
+                                    {
+                                        "name": "updatedBy",
+                                        "type": "uuid",
+                                        "label": "Updated by"
+                                    },
+                                    {
+                                        "name": "nZIan",
+                                        "type": "text",
+                                        "label": "Display name",
+                                        "value": "nZIan"
+                                    },
+                                    {
+                                        "name": "SnWgY",
+                                        "type": "text",
+                                        "label": "Log Date",
+                                        "value": "SnWgY"
+                                    },
+                                    {
+                                        "name": "SppYI",
+                                        "type": "number",
+                                        "label": "Odometer Reading",
+                                        "value": "SppYI"
+                                    },
+                                    {
+                                        "name": "3hd8Z",
+                                        "type": "number",
+                                        "label": "Fuel Amount",
+                                        "value": "3hd8Z"
+                                    },
+                                    {
+                                        "name": "5LWRY",
+                                        "type": "number",
+                                        "label": "Fuel Cost",
+                                        "value": "5LWRY"
+                                    },
+                                    {
+                                        "name": "om5j9",
+                                        "type": "number",
+                                        "label": "Fuel Price per Litre",
+                                        "value": "om5j9"
+                                    },
+                                    {
+                                        "name": "eelyZ",
+                                        "type": "boolean",
+                                        "label": "Full Tank",
+                                        "value": "eelyZ"
+                                    },
+                                    {
+                                        "name": "y0xNJ",
+                                        "type": "text",
+                                        "label": "Notes",
+                                        "value": "y0xNJ"
+                                    },
+                                    {
+                                        "name": "tLhbT",
+                                        "type": "text",
+                                        "label": "Created At",
+                                        "value": "tLhbT"
+                                    },
+                                    {
+                                        "name": "qQxs6",
+                                        "type": "text",
+                                        "label": "Updated At",
+                                        "value": "qQxs6"
+                                    },
+                                    {
+                                        "name": "OHa56",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By",
+                                        "value": "OHa56"
+                                    },
+                                    {
+                                        "name": "DGXlo",
+                                        "type": "text",
+                                        "label": "Fuel Cost per Litre",
+                                        "value": "DGXlo"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Softr: Update on maintenance records",
+                    "description": "Update all information from maintenance sheet of goggle sheets to all required fields on the softr database e.g date column to date column",
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "softr:createDatabaseRecord",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 12609716
+                            },
+                            "mapper": {
+                                "4sPcJ": "{{1.input_4sPcJ}}",
+                                "I0WIs": {
+                                    "label": "{{1.I0WIs.label}}"
+                                },
+                                "IVjoi": {
+                                    "label": "{{1.IVjoi.label}}"
+                                },
+                                "WnmRD": {
+                                    "label": "{{1.WnmRD.label}}"
+                                },
+                                "detSw": "{{1.detSw}}",
+                                "mZ22X": "{{1.mZ22X}}",
+                                "qC3sr": "{{1.qC3sr}}",
+                                "qKnMp": "{{1.qKnMp}}",
+                                "qNK5t": "{{1.qNK5t}}",
+                                "qW8Qu": "{{1.qW8Qu}}",
+                                "vmjYQ": "{{1.vmjYQ}}",
+                                "tableId": "Nm7kuALEmVnK86",
+                                "databaseId": "d9ba55c7-335f-46ba-8d7b-aabc143eaba6"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 608,
+                                    "y": 304
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "f363e0f0aa9856f5"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "tableId": {
+                                            "label": "Maintenance"
+                                        },
+                                        "databaseId": {
+                                            "label": "Andrew's Farm "
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "softr2"
+                                            },
+                                            "label": "Vahid's Softr Database connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:softr2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "databaseId",
+                                        "type": "select",
+                                        "label": "Database",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableId",
+                                        "type": "select",
+                                        "label": "Table",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "mZ22X",
+                                        "type": "text",
+                                        "label": "Job Title"
+                                    },
+                                    {
+                                        "name": "4sPcJ",
+                                        "type": "text",
+                                        "label": "Service Date"
+                                    },
+                                    {
+                                        "name": "qC3sr",
+                                        "type": "number",
+                                        "label": "Odometer Reading"
+                                    },
+                                    {
+                                        "name": "IVjoi",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Type"
+                                    },
+                                    {
+                                        "name": "detSw",
+                                        "type": "number",
+                                        "label": "Cost"
+                                    },
+                                    {
+                                        "name": "vmjYQ",
+                                        "type": "text",
+                                        "label": "Description"
+                                    },
+                                    {
+                                        "name": "I0WIs",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Status"
+                                    },
+                                    {
+                                        "name": "qNK5t",
+                                        "type": "text",
+                                        "label": "Next Due Date"
+                                    },
+                                    {
+                                        "name": "qKnMp",
+                                        "type": "text",
+                                        "label": "Created At"
+                                    },
+                                    {
+                                        "name": "qW8Qu",
+                                        "type": "text",
+                                        "label": "Updated At"
+                                    },
+                                    {
+                                        "name": "WnmRD",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "date",
+                                        "label": "Date created"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "date",
+                                        "label": "Date updated"
+                                    },
+                                    {
+                                        "name": "createdBy",
+                                        "type": "uuid",
+                                        "label": "Created by"
+                                    },
+                                    {
+                                        "name": "updatedBy",
+                                        "type": "uuid",
+                                        "label": "Updated by"
+                                    },
+                                    {
+                                        "name": "mZ22X",
+                                        "type": "text",
+                                        "label": "Job Title",
+                                        "value": "mZ22X"
+                                    },
+                                    {
+                                        "name": "4sPcJ",
+                                        "type": "text",
+                                        "label": "Service Date",
+                                        "value": "4sPcJ"
+                                    },
+                                    {
+                                        "name": "qC3sr",
+                                        "type": "number",
+                                        "label": "Odometer Reading",
+                                        "value": "qC3sr"
+                                    },
+                                    {
+                                        "name": "IVjoi",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Type",
+                                        "value": "IVjoi"
+                                    },
+                                    {
+                                        "name": "detSw",
+                                        "type": "number",
+                                        "label": "Cost",
+                                        "value": "detSw"
+                                    },
+                                    {
+                                        "name": "vmjYQ",
+                                        "type": "text",
+                                        "label": "Description",
+                                        "value": "vmjYQ"
+                                    },
+                                    {
+                                        "name": "I0WIs",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Status",
+                                        "value": "I0WIs"
+                                    },
+                                    {
+                                        "name": "qNK5t",
+                                        "type": "text",
+                                        "label": "Next Due Date",
+                                        "value": "qNK5t"
+                                    },
+                                    {
+                                        "name": "qKnMp",
+                                        "type": "text",
+                                        "label": "Created At",
+                                        "value": "qKnMp"
+                                    },
+                                    {
+                                        "name": "qW8Qu",
+                                        "type": "text",
+                                        "label": "Updated At",
+                                        "value": "qW8Qu"
+                                    },
+                                    {
+                                        "name": "WnmRD",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By",
+                                        "value": "WnmRD"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Softr: Updates on user details from google sheets logins sheet",
+                    "description": "Update information on any new users that are logged into the website via information from logins sheet from google sheets Andrew's farm",
+                    "flow": [
+                        {
+                            "id": 10,
+                            "module": "softr:createDatabaseRecord",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 12609716
+                            },
+                            "mapper": {
+                                "KNdlV": "{{1.KNdlV}}",
+                                "QH0S6": {
+                                    "url": "{{1.QH0S6.url}}"
+                                },
+                                "ZVuWi": "{{1.ZVuWi}}",
+                                "c63tL": "{{1.c63tL}}",
+                                "o0JWv": "{{1.o0JWv}}",
+                                "oeWLT": "{{1.oeWLT}}",
+                                "p8f8S": "{{1.p8f8S}}",
+                                "z0b2k": {
+                                    "label": "{{1.z0b2k.label}}"
+                                },
+                                "tableId": "zfHijgJ8i0PpF5",
+                                "databaseId": "d9ba55c7-335f-46ba-8d7b-aabc143eaba6"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 400,
+                                    "y": 368
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "551dcf819dd95e1c"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "KNdlV": {
+                                            "mode": "edit"
+                                        },
+                                        "ZVuWi": {
+                                            "mode": "edit"
+                                        },
+                                        "oeWLT": {
+                                            "mode": "edit"
+                                        },
+                                        "p8f8S": {
+                                            "mode": "edit"
+                                        },
+                                        "tableId": {
+                                            "label": "Users"
+                                        },
+                                        "databaseId": {
+                                            "label": "Andrew's Farm "
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "softr2"
+                                            },
+                                            "label": "Vahid's Softr Database connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:softr2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "databaseId",
+                                        "type": "select",
+                                        "label": "Database",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableId",
+                                        "type": "select",
+                                        "label": "Table",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "c63tL",
+                                        "type": "email",
+                                        "label": "Email"
+                                    },
+                                    {
+                                        "name": "o0JWv",
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    {
+                                        "name": "QH0S6",
+                                        "spec": [
+                                            {
+                                                "name": "url",
+                                                "type": "url",
+                                                "label": "Url"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Avatar"
+                                    },
+                                    {
+                                        "name": "z0b2k",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Role"
+                                    },
+                                    {
+                                        "name": "ZVuWi",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Fuel Logs"
+                                    },
+                                    {
+                                        "name": "KNdlV",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Maintenance Jobs"
+                                    },
+                                    {
+                                        "name": "oeWLT",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Transactions"
+                                    },
+                                    {
+                                        "name": "p8f8S",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Routes"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "date",
+                                        "label": "Date created"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "date",
+                                        "label": "Date updated"
+                                    },
+                                    {
+                                        "name": "createdBy",
+                                        "type": "uuid",
+                                        "label": "Created by"
+                                    },
+                                    {
+                                        "name": "updatedBy",
+                                        "type": "uuid",
+                                        "label": "Updated by"
+                                    },
+                                    {
+                                        "name": "c63tL",
+                                        "type": "email",
+                                        "label": "Email",
+                                        "value": "c63tL"
+                                    },
+                                    {
+                                        "name": "o0JWv",
+                                        "type": "text",
+                                        "label": "Name",
+                                        "value": "o0JWv"
+                                    },
+                                    {
+                                        "name": "QH0S6",
+                                        "spec": [
+                                            {
+                                                "name": "url",
+                                                "type": "url",
+                                                "label": "Url"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Avatar",
+                                        "value": "QH0S6"
+                                    },
+                                    {
+                                        "name": "z0b2k",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Role",
+                                        "value": "z0b2k"
+                                    },
+                                    {
+                                        "name": "ZVuWi",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Fuel Logs",
+                                        "value": "ZVuWi"
+                                    },
+                                    {
+                                        "name": "KNdlV",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Maintenance Jobs",
+                                        "value": "KNdlV"
+                                    },
+                                    {
+                                        "name": "oeWLT",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Transactions",
+                                        "value": "oeWLT"
+                                    },
+                                    {
+                                        "name": "p8f8S",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Routes",
+                                        "value": "p8f8S"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Softr: Updates on transaction records from transactions sheet from Andrew's farm from google sheets",
+                    "description": "Update all required fields or columns on softr based on information acquired from google sheets transaction table from Andrew's farm e.g Payment method to payment method ",
+                    "flow": [
+                        {
+                            "id": 11,
+                            "module": "softr:createDatabaseRecord",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 12609716
+                            },
+                            "mapper": {
+                                "4kxi8": "{{1.input_4kxi8}}",
+                                "5UYT3": "{{1.input_5UYT3}}",
+                                "CHRHq": {
+                                    "label": "{{1.CHRHq.label}}"
+                                },
+                                "Dd9aM": "{{1.Dd9aM}}",
+                                "EGzpf": "{{1.EGzpf}}",
+                                "JG1R5": "{{1.JG1R5}}",
+                                "U6wep": "{{1.U6wep}}",
+                                "UnIhI": {
+                                    "label": "{{1.UnIhI.label}}"
+                                },
+                                "gxIPV": {
+                                    "label": "{{1.gxIPV.label}}"
+                                },
+                                "mvyFK": {
+                                    "label": "{{1.mvyFK.label}}"
+                                },
+                                "tEpFk": "{{1.tEpFk}}",
+                                "tableId": "iF7rVa6DfFU9Jo",
+                                "databaseId": "d9ba55c7-335f-46ba-8d7b-aabc143eaba6"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 726,
+                                    "y": 526
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "c18fc670a55f7138"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "tableId": {
+                                            "label": "Transactions"
+                                        },
+                                        "databaseId": {
+                                            "label": "Andrew's Farm "
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "softr2"
+                                            },
+                                            "label": "Vahid's Softr Database connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:softr2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "databaseId",
+                                        "type": "select",
+                                        "label": "Database",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableId",
+                                        "type": "select",
+                                        "label": "Table",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "EGzpf",
+                                        "type": "text",
+                                        "label": "Display Name"
+                                    },
+                                    {
+                                        "name": "Dd9aM",
+                                        "type": "text",
+                                        "label": "Transaction Date"
+                                    },
+                                    {
+                                        "name": "JG1R5",
+                                        "type": "text",
+                                        "label": "Description"
+                                    },
+                                    {
+                                        "name": "CHRHq",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Type"
+                                    },
+                                    {
+                                        "name": "gxIPV",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Category"
+                                    },
+                                    {
+                                        "name": "4kxi8",
+                                        "type": "number",
+                                        "label": "Amount"
+                                    },
+                                    {
+                                        "name": "mvyFK",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Payment Method"
+                                    },
+                                    {
+                                        "name": "U6wep",
+                                        "type": "text",
+                                        "label": "Notes"
+                                    },
+                                    {
+                                        "name": "tEpFk",
+                                        "type": "text",
+                                        "label": "Created At"
+                                    },
+                                    {
+                                        "name": "5UYT3",
+                                        "type": "text",
+                                        "label": "Updated At"
+                                    },
+                                    {
+                                        "name": "UnIhI",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "date",
+                                        "label": "Date created"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "date",
+                                        "label": "Date updated"
+                                    },
+                                    {
+                                        "name": "createdBy",
+                                        "type": "uuid",
+                                        "label": "Created by"
+                                    },
+                                    {
+                                        "name": "updatedBy",
+                                        "type": "uuid",
+                                        "label": "Updated by"
+                                    },
+                                    {
+                                        "name": "EGzpf",
+                                        "type": "text",
+                                        "label": "Display Name",
+                                        "value": "EGzpf"
+                                    },
+                                    {
+                                        "name": "Dd9aM",
+                                        "type": "text",
+                                        "label": "Transaction Date",
+                                        "value": "Dd9aM"
+                                    },
+                                    {
+                                        "name": "JG1R5",
+                                        "type": "text",
+                                        "label": "Description",
+                                        "value": "JG1R5"
+                                    },
+                                    {
+                                        "name": "CHRHq",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Type",
+                                        "value": "CHRHq"
+                                    },
+                                    {
+                                        "name": "gxIPV",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Category",
+                                        "value": "gxIPV"
+                                    },
+                                    {
+                                        "name": "4kxi8",
+                                        "type": "number",
+                                        "label": "Amount",
+                                        "value": "4kxi8"
+                                    },
+                                    {
+                                        "name": "mvyFK",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Payment Method",
+                                        "value": "mvyFK"
+                                    },
+                                    {
+                                        "name": "U6wep",
+                                        "type": "text",
+                                        "label": "Notes",
+                                        "value": "U6wep"
+                                    },
+                                    {
+                                        "name": "tEpFk",
+                                        "type": "text",
+                                        "label": "Created At",
+                                        "value": "tEpFk"
+                                    },
+                                    {
+                                        "name": "5UYT3",
+                                        "type": "text",
+                                        "label": "Updated At",
+                                        "value": "5UYT3"
+                                    },
+                                    {
+                                        "name": "UnIhI",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Created By",
+                                        "value": "UnIhI"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Softr: Updates on customers records on softr from customers table on google sheets",
+                    "description": "Update all information on each field from the customers table from Andrew's farm on google sheets to required fields at softr database e.g Customers name and job status to customer's name and job type.",
+                    "flow": [
+                        {
+                            "id": 12,
+                            "module": "softr:createDatabaseRecord",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 12609716
+                            },
+                            "mapper": {
+                                "8FpU4": "{{1.input_8FpU4}}",
+                                "goFeC": "{{1.goFeC}}",
+                                "iN4pw": "{{1.iN4pw}}",
+                                "mjFmE": "{{1.mjFmE}}",
+                                "t8xmm": "{{1.t8xmm}}",
+                                "tndgC": {
+                                    "label": "{{1.tndgC.label}}"
+                                },
+                                "tableId": "T8MlPc3Nunsdoh",
+                                "databaseId": "d9ba55c7-335f-46ba-8d7b-aabc143eaba6"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 498,
+                                    "y": 590
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "b05e0fd1990178a0"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "tableId": {
+                                            "label": "Job status"
+                                        },
+                                        "databaseId": {
+                                            "label": "Andrew's Farm "
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "softr2"
+                                            },
+                                            "label": "Vahid's Softr Database connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:softr2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "databaseId",
+                                        "type": "select",
+                                        "label": "Database",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableId",
+                                        "type": "select",
+                                        "label": "Table",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "8FpU4",
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    {
+                                        "name": "mjFmE",
+                                        "type": "text",
+                                        "label": "Description"
+                                    },
+                                    {
+                                        "name": "iN4pw",
+                                        "type": "text",
+                                        "label": "AI Summary"
+                                    },
+                                    {
+                                        "name": "tndgC",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Status"
+                                    },
+                                    {
+                                        "name": "goFeC",
+                                        "type": "text",
+                                        "label": "Contacts"
+                                    },
+                                    {
+                                        "name": "t8xmm",
+                                        "type": "text",
+                                        "label": "Feed back"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "date",
+                                        "label": "Date created"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "date",
+                                        "label": "Date updated"
+                                    },
+                                    {
+                                        "name": "createdBy",
+                                        "type": "uuid",
+                                        "label": "Created by"
+                                    },
+                                    {
+                                        "name": "updatedBy",
+                                        "type": "uuid",
+                                        "label": "Updated by"
+                                    },
+                                    {
+                                        "name": "8FpU4",
+                                        "type": "text",
+                                        "label": "Name",
+                                        "value": "8FpU4"
+                                    },
+                                    {
+                                        "name": "mjFmE",
+                                        "type": "text",
+                                        "label": "Description",
+                                        "value": "mjFmE"
+                                    },
+                                    {
+                                        "name": "iN4pw",
+                                        "type": "text",
+                                        "label": "AI Summary",
+                                        "value": "iN4pw"
+                                    },
+                                    {
+                                        "name": "tndgC",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Status",
+                                        "value": "tndgC"
+                                    },
+                                    {
+                                        "name": "goFeC",
+                                        "type": "text",
+                                        "label": "Contacts",
+                                        "value": "goFeC"
+                                    },
+                                    {
+                                        "name": "t8xmm",
+                                        "type": "text",
+                                        "label": "Feed back",
+                                        "value": "t8xmm"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Weekly analysis prompt",
+                    "description": "Act as a Chief Operations Manager and oversee if this scenario successfully gets all information from google sheets and does a strategic thorough analysis on the information and comes up with a properly written profesional report and upcoming strategies for the next week by every 4pm Sunday and sends it to my email and the farm manager's email. \nRules: It should use diagrams and table and charts wherever apliccable,use alex homozi's and similar strategies, avoid fictional data and be accurate.\nGoals: Ensure time and money saving,ensure profitability and cash flow, make it appealing",
+                    "flow": [
+                        {
+                            "id": 13,
+                            "module": "scenario-service:CallSubscenario",
+                            "version": 2,
+                            "parameters": {
+                                "scenario": "SCN_8337194",
+                                "shouldWaitForExecutionEnd": true
+                            },
+                            "mapper": {},
+                            "metadata": {
+                                "designer": {
+                                    "x": 673,
+                                    "y": 721
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "2eaab525783ae08e"
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "scenario": {
+                                            "label": "Weekly analysis prompt"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "scenario",
+                                        "type": "scenario",
+                                        "label": "Scenario",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "shouldWaitForExecutionEnd",
+                                        "type": "boolean",
+                                        "label": "Wait for the scenario to finish",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "options": {
+                        "useScenarioNameAndDescription": true
+                    }
+                },
+                {
+                    "name": "Email response prompt",
+                    "description": "Act as a Chief Operations Manager and ensure this scenario read s all emails from my email (vahidjuma002@gmail.com) . It should only come up with responses for the emails that are related to this business. \nRules:Come up with professionally written responses with polite words and thanks to ensure good relations,avoid spamming other people, only write to people we are in business with,flag any issues.\nGoals: Maintain good relations with business associates,maintain professional communication, be polite to everyone, avoid spamming especially wrong people.",
+                    "flow": [
+                        {
+                            "id": 14,
+                            "module": "scenario-service:CallSubscenario",
+                            "version": 2,
+                            "parameters": {
+                                "scenario": "SCN_8337958",
+                                "shouldWaitForExecutionEnd": true
+                            },
+                            "mapper": {},
+                            "metadata": {
+                                "designer": {
+                                    "x": 490,
+                                    "y": 792
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "6792033038710426"
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "scenario": {
+                                            "label": "Email response prompt"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "scenario",
+                                        "type": "scenario",
+                                        "label": "Scenario",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "shouldWaitForExecutionEnd",
+                                        "type": "boolean",
+                                        "label": "Wait for the scenario to finish",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "options": {
+                        "useScenarioNameAndDescription": true
+                    }
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}
