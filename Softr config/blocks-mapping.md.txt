@@ -1,0 +1,19 @@
+markdown
+# Softr Blocks Mapping
+
+## 1. Landing / Booking Page
+* **Block Type:** Form Block
+* **Purpose:** Allows clients or operators to submit new tractor ploughing requests.
+* **Data Destination:** Connected to Google Sheets (`Ploughing_Bookings` tab).
+* **Automations:** Triggers a webhook directly to Make.com on form submission.
+
+## 2. Operator Dashboard
+* **Block Type:** Table / List Block
+* **Purpose:** Displays active fields that need ploughing.
+* **Data Source:** Reads from Google Sheets (`Tractor_Operations` tab).
+* **Visibility Rules:** Conditional visibility applied. Operators only see records matching their user email.
+
+## 3. Financial Tracker (Admin Only)
+* **Block Type:** Grid List Block
+* **Purpose:** Displays total acreage completed, fuel expenses, and supplier payouts.
+* **Data Source:** Reads from Google Sheets (`Revenue_Log` tab).

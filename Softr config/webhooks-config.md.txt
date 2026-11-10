@@ -1,0 +1,17 @@
+markdown
+# Webhooks Configuration
+
+## Make.com Scenario Connection
+* **Softr Trigger Block:** Booking Form Button (Action: Send to Webhook).
+* **Make.com Webhook URL:** `https://make.com`
+* **Trigger Event:** On Form Submit.
+
+## Payload Data Structure
+When the webhook fires, the following data variables are mapped and sent from Softr to the Make.com scenario:
+1. `Acreage` (Number field indicating size of the farm plot)
+2. `Location` (Text field indicating farm location, e.g., Shirugu or Salgaa)
+3. `Client_Contact` (Phone number / M-Pesa details)
+4. `Status` (Defaults to "Pending Assignment")
+5. 'Trip logs' (Fuel, odometer readings and any other other information regarding a trip)
+6. 'Maintenance' (Maintenance costs,information and status)
+7. 'Customers' ( Name,contacts and feedback)
