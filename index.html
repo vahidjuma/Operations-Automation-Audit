@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Driven Digital Operations Assistant: Workflow Audit</title>
+<style>
+:root{--bg:#f5f7f4;--surface:#fff;--text:#1d2a26;--muted:#5b6b65;--line:#d3dcd7;--accent:#0f6b57;--ink:#fff;--warn:#9a4a00}
+@media (prefers-color-scheme:dark){:root{--bg:#121a17;--surface:#1a2420;--text:#e7efeb;--muted:#9db0a8;--line:#2b3a34;--accent:#4cc2a1;--ink:#0d1512;--warn:#f0a35e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.btn,.tag,.step b{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif}
+header{padding:60px 0 36px;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.1;margin:0 0 16px;letter-spacing:-.02em}
+.lead{font-size:1.1rem;color:var(--muted);max-width:62ch;margin:0 0 26px}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;text-decoration:none;background:var(--accent);color:var(--ink);font-weight:700;margin:0 10px 10px 0}
+.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+section{padding:42px 0;border-bottom:1px solid var(--line)}
+h2{font-size:1.5rem;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:62ch}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:14px 18px}
+.step b{display:block;margin-bottom:2px}
+.step span{color:var(--muted)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.card h3{margin:0 0 6px;font-size:1.05rem}
+.card p{margin:0;color:var(--muted);font-size:.97rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.tag{border:1px solid var(--line);border-radius:99px;padding:4px 14px;font-size:.9rem;background:var(--surface)}
+.issues{margin:0;padding-left:1.2rem}
+.issues li{margin-bottom:10px}
+.issues strong{color:var(--warn)}
+.folders a{color:var(--accent);font-weight:700}
+footer{padding:30px 0 56px;color:var(--muted);font-size:.95rem}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>AI-Driven Digital Operations Assistant</h1>
+<p class="lead">A pilot system that runs a tractor ploughing and vehicle operations business: bookings, jobs, fuel, maintenance and cash, connected end to end. This repository is submitted for an audit before real-world testing.</p>
+<a class="btn" href="#flow">How it works</a>
+<a class="btn alt" href="https://github.com/vahidjuma/Operations-Automation-Audit">View the repository</a>
+</div>
+</header>
+
+<main class="wrap">
+<section id="flow">
+<h2>How it works</h2>
+<p class="sub">Data moves in a loop between the website, the automations and the spreadsheet.</p>
+<ol class="steps">
+<li class="step"><b>1. Softr website</b><span>Customers and staff enter bookings, acreage and job details through forms and buttons. Softr sends the data out through webhooks.</span></li>
+<li class="step"><b>2. Make.com automations</b><span>Catch the webhooks, route each record to the right sheet tab and hand text to the AI where needed.</span></li>
+<li class="step"><b>3. OpenAI</b><span>Structures raw inputs, writes the weekly analysis and drafts email replies.</span></li>
+<li class="step"><b>4. Google Sheets</b><span>The single source of truth for jobs, customers, tractors, trips, maintenance and transactions.</span></li>
+<li class="step"><b>5. Sync back to Softr</b><span>Make pushes updates back so users see current data on the website.</span></li>
+</ol>
+</section>
+
+<section>
+<h2>The automations</h2>
+<p class="sub">Seven Make.com scenarios, exported as JSON in the repository.</p>
+<div class="grid">
+<article class="card"><h3>Webhook from Softr to Google Sheets</h3><p>Receives Softr data and adds rows to Trip logs, Customers, Login, Maintenance and Transactions. A second route sends text to OpenAI.</p></article>
+<article class="card"><h3>Web mapping back end to Softr</h3><p>Uses OpenAI, adds a Maintenance row and creates a Softr user, closing the loop back to the website.</p></article>
+<article class="card"><h3>Weekly report v2</h3><p>Reads one weekly digest cell from the sheet, has GPT-4o-mini write a plain-text report, and emails it to the managers.</p></article>
+<article class="card"><h3>Weekly analysis prompt</h3><p>Lists the sheet tabs, filters their rows and emails the analysis.</p></article>
+<article class="card"><h3>Digital Operations Assistant AI agent</h3><p>An agent that routes tasks, supervises scenario results and flags errors to the manager.</p></article>
+<article class="card"><h3>Email response prompt</h3><p>Watches for new emails and drafts a reply with OpenAI.</p></article>
+<article class="card"><h3>Integration HTTP</h3><p>Sends SMS through the Africa's Talking messaging API (sandbox).</p></article>
+</div>
+</section>
+
+<section>
+<h2>The data workbook</h2>
+<p class="sub">The v2 Google Sheets workbook has 13 tabs. A Failed_Jobs tab logs records that fail to sync, and a Weekly_Digest tab holds the figures the AI report reads.</p>
+<ul class="tags">
+<li class="tag">Bookings</li><li class="tag">Jobs</li><li class="tag">Customers</li><li class="tag">Trip logs</li><li class="tag">Maintenance</li><li class="tag">Transactions</li><li class="tag">Tractors</li><li class="tag">Config</li><li class="tag">Summary</li><li class="tag">Weekly_Digest</li><li class="tag">Failed_Jobs</li><li class="tag">Field_Map</li><li class="tag">README</li>
+</ul>
+</section>
+
+<section>
+<h2>Open issues for the audit</h2>
+<p class="sub">These are the problems the audit is meant to solve.</p>
+<ol class="issues">
+<li><strong>Credit drain.</strong> The two-way sync between Softr and Sheets uses up Make operations quickly.</li>
+<li><strong>Multi-sheet mapping.</strong> One webhook must route data to different tabs without hardcoded values.</li>
+<li><strong>AI output format.</strong> Unexpected markdown from OpenAI can break scenarios before data reaches the sheet.</li>
+<li><strong>Access boundaries.</strong> The AI module needs tighter limits on which sheets and rows it can read and write.</li>
+<li><strong>No live business data yet.</strong> The AI works on system structure, not real constraints or supplier details.</li>
+<li><strong>Slow webhook testing.</strong> Testing relies on live clicks in Softr, which also costs operations.</li>
+<li><strong>Weak error handling.</strong> Failed API calls can drop data without alerting the manager.</li>
+</ol>
+</section>
+
+<section class="folders">
+<h2>Browse the files</h2>
+<p class="sub">
+<a href="https://github.com/vahidjuma/Operations-Automation-Audit/tree/main/Make%20Blueprints">Make Blueprints</a> ·
+<a href="https://github.com/vahidjuma/Operations-Automation-Audit/tree/main/Database%20schemas">Database schemas</a> ·
+<a href="https://github.com/vahidjuma/Operations-Automation-Audit/tree/main/Softr%20config">Softr config</a>
+</p>
+</section>
+</main>
+
+<footer><div class="wrap">Operations Automation Audit. Built with Softr, Make.com, OpenAI and Google Sheets.</div></footer>
+</body>
+</html>
